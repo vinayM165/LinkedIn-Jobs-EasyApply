@@ -13,12 +13,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Utils {
-	Config config = new Config();
-	Constants constants = new Constants();	
-	public Utils() {
-		// TODO Auto-generated constructor stub
+	Config config ;
+	Constants constants;	
+	WebDriver driver;
+	public Utils() {}
+	public Utils(WebDriver driver) {
+		this.config = new Config();
+		this.constants = new Constants();	
+		this.driver = driver;
 	}
-	public  ChromeOptions browserOptions() {
+	public static ChromeOptions browserOptions() {
 	    ChromeOptions options = new ChromeOptions();
 	   // String firefoxProfileRootDir = config.firefoxProfileRootDir;
 	    options.addArguments("--start-maximized");
@@ -26,7 +30,7 @@ public class Utils {
 	    options.addArguments("--no-sandbox");
 	    options.addArguments("--disable-extensions");
 	    options.addArguments("--disable-gpu");
-	    if (config.headless) {
+	    if (Config.headless) {
 	        options.addArguments("--headless");
 	    }
 	    options.addArguments("--disable-blink-features");
@@ -80,7 +84,6 @@ public class Utils {
 
 	    return number_of_pages;
 	}
-
 	public String[] urlToKeywords(String url) {
 	    String keywordUrl = url.substring(url.indexOf("keywords=") + 9);
 	    String keyword = keywordUrl.substring(0, keywordUrl.indexOf("&"));
@@ -125,7 +128,7 @@ public class Utils {
 	public void donate() {
 	    prYellow("If you like the project, please support me so that i can make more such projects, thanks!");
 	    try {
-	       // driver.get("https://commerce.coinbase.com/checkout/576ee011-ba40-47d5-9672-ef7ad29b1e6c");
+	        driver.get("https://www.buymeacoffee.com/Mvinay5");
 	    } catch (Exception e) {
 	        prRed("Error in donate: " + e.getMessage());
 	    }

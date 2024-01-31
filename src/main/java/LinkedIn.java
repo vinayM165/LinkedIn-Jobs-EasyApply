@@ -17,20 +17,21 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LinkedIn {
-	Config config = new Config();
-	Utils utils = new Utils();
-	Constants constants = new Constants();
+	Utils utils;
+	Constants constants;
 	WebDriver driver;
 	WebDriverWait wait;
 	public LinkedIn() {
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\VMANDGE\\Downloads\\chromedriver-win64\\chromedriver.exe");
-		driver = new ChromeDriver();
+		constants = new Constants();
+		System.setProperty("webdriver.chrome.driver", "path/to/driver");
+		driver = new ChromeDriver(utils.browserOptions());
+		utils = new Utils(driver);
 		 wait = new WebDriverWait(driver, 10);
 		 driver.get("https://www.linkedin.com/login");
 		  WebElement emailInput = driver.findElement(By.id("username"));
-		  emailInput.sendKeys("mandgevinay16@gmail.com");
+		  emailInput.sendKeys(Config.email);
 		  WebElement passwordInput = driver.findElement(By.id("password"));
-		  passwordInput.sendKeys("vkshimpi16599");
+		  passwordInput.sendKeys(Config.password);
 		  WebElement signInButton = driver.findElement(By.xpath("//button[@type='submit']"));
 		  signInButton.click();
 	}
@@ -103,9 +104,9 @@ public class LinkedIn {
 	                            displayWriteResults(lineToWrite1);
 	                        } catch (Exception e1) {
 	                            try {
-	                                driver.findElement(By.cssSelector("option[value='urn:li:country:" + config.country_code + "']")).click();
+	                                driver.findElement(By.cssSelector("option[value='urn:li:country:" + Config.country_code + "']")).click();
 	                                Thread.sleep((long) (constants.botSpeed * 1000));
-	                                driver.findElement(By.cssSelector("input")).sendKeys(config.phone_number);
+	                                driver.findElement(By.cssSelector("input")).sendKeys(Config.phone_number);
 	                                Thread.sleep((long) (constants.botSpeed * 1000));
 	                                driver.findElement(By.cssSelector("button[aria-label='Continue to next step']")).click();
 	                                Thread.sleep((long) (constants.botSpeed * 1000));
@@ -213,7 +214,7 @@ public class LinkedIn {
 	        System.out.println("Clicked on review button");
 	        Thread.sleep((long) (constants.botSpeed * 2000));
 
-//	        if (!config.followCompanies) {
+//	        if (!Config.followCompanies) {
 //	            driver.findElement(By.cssSelector("label[for='follow-company-checkbox']")).click();
 //	            Thread.sleep((long) (constants.botSpeed * 1000));
 //	        }
